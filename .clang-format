@@ -12,4 +12,9 @@ IndentCaseLabels: false
 # AllowShortCaseLabelsOnASingleLine: true
 IndentAccessModifiers: false
 AccessModifierOffset: -4
+AlignAfterOpenBracket: BlockIndent
+AllowAllArgumentsOnNextLine: false
+AlignOperands: AlignAfterOperator
+AllowShortBlocksOnASingleLine: false
+BreakBeforeBinaryOperators: All
 ...
