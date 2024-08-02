@@ -9,4 +9,4 @@ aoc: ./src/$(day)/main.cpp
 	$(CC) $(CFLAGS) -o /tmp/aoc.out ./src/$(day)/main.cpp
 
 run: aoc
-	/tmp/aoc.out
+	/tmp/aoc.out $(part)
