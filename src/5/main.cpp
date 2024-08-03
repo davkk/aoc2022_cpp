@@ -54,18 +54,10 @@ public:
     }
 
     void move_crates_many(size_t move, size_t from, size_t to) {
-        const auto& to_move{
-            crates[from]                      //
-            | std::ranges::views::reverse     //
-            | std::ranges::views::take(move)  //
-            | std::ranges::views::reverse
-        };
-        for (const auto crate : to_move) {
-            crates[to].push_back(crate);
-        }
-        crates[from].erase(
-            crates[from].end() - static_cast<int>(move), crates[from].end()
-        );
+        auto start{crates[from].end() - static_cast<int>(move)};
+        auto end{crates[from].end()};
+        crates[to].insert(crates[to].end(), start, end);
+        crates[from].erase(start, end);
     }
 
     std::string current_state() {
