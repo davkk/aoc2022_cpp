@@ -1,6 +1,4 @@
-#include <algorithm>
 #include <iostream>
-#include <ranges>
 #include <string>
 #include <vector>
 
@@ -8,7 +6,7 @@ std::vector<std::string> split_on_space(std::string_view str) {
     std::vector<std::string> parts{};
     std::string part{};
 
-    for (const auto& ch : str) {
+    for (const auto &ch : str) {
         if (std::isspace(ch)) {
             parts.push_back(part);
             part.clear();
@@ -26,18 +24,15 @@ private:
     std::vector<std::vector<char>> crates{};
 
 public:
-    explicit CrateStack(const std::vector<std::string>& init_state)
+    explicit CrateStack(const std::vector<std::string> &init_state)
         : crates((init_state.back().size() + 2) / 4) {
-        const auto& reversed{
-            init_state                     //
-            | std::ranges::views::reverse  //
-            | std::ranges::views::drop(1)
-        };
-
-        for (const auto& level : reversed) {
-            size_t num_boxes{(level.size() + 1) / 4};
+        for (auto level{init_state.rbegin() + 1}; level < init_state.rend();
+             ++level)
+        {
+            size_t num_boxes{(level->size() + 1) / 4};
             for (size_t i{0}; i < num_boxes; ++i) {
-                auto crate{level[4 * i + 1]};
+                auto crate{(*level)[4 * i + 1]};
+
                 if (!std::isspace(crate)) {
                     crates[i].push_back(crate);
                 }
@@ -62,7 +57,7 @@ public:
 
     std::string current_state() {
         std::string result{};
-        for (const auto& col : crates) {
+        for (const auto &col : crates) {
             result += col.back();
         }
         return result;
@@ -119,8 +114,10 @@ std::string solve() {
 }
 }  // namespace Part2
 
-int main(int argc, const char* argv[]) {
-    if (argc == 1) return 1;
+int main(int argc, const char *argv[]) {
+    if (argc == 1) {
+        return 1;
+    }
 
     switch (argv[1][0]) {
     case '1':
